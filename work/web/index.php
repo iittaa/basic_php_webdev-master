@@ -3,9 +3,12 @@
 // 処理を止めたい require
 require("../app/functions.php");
 
+createToken();
+
 define("FILENAME", "../app/messages.txt");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  validateToken();
   $message = trim($_POST["message"]);
   $message = $message !== "" ? $message : "...";
   // $fileName = "../app/messages.txt";
@@ -22,7 +25,6 @@ $messages = file(FILENAME, FILE_IGNORE_NEW_LINES);
 // 処理を止めなくても良い include
 include("../app/_parts/_header.php");
 
-
 ?>
 
 <ul>
@@ -30,7 +32,6 @@ include("../app/_parts/_header.php");
     <li><?= h($message); ?></li>
   <?php endforeach; ?>
 </ul>
-
 
 <form action="" method="post">
 <input type="text" name="message" >
@@ -53,7 +54,7 @@ include("../app/_parts/_header.php");
 
 
   <button>Post</button>
-  
+  <input type="hidden" name="token" value="<?= h($_SESSION["token"]); ?>">
 </form>
 
 <?php
