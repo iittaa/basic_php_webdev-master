@@ -3,18 +3,37 @@
 // 処理を止めたい require
 require("../app/functions.php");
 
+define("FILENAME", "../app/messages.txt");
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $message = trim($_POST["message"]);
+  $message = $message !== "" ? $message : "...";
+  // $fileName = "../app/messages.txt";
+  $fp = fopen(FILENAME, "a");
+  fwrite($fp, $message . "\n");
+  fclose($fp);
+  header("Location: http://localhost:8080/result.php");
+  exit;
+} 
+
+// $fileName = "../app/messages.txt";
+$messages = file(FILENAME, FILE_IGNORE_NEW_LINES);
+
 // 処理を止めなくても良い include
 include("../app/_parts/_header.php");
 
-$names = [
-  "Taro",
-  "Jiro",
-  "Saburo",
-];
+
 ?>
 
+<ul>
+  <?php foreach ($messages as $message): ?>
+    <li><?= h($message); ?></li>
+  <?php endforeach; ?>
+</ul>
 
-<form action="result.php" method="post">
+
+<form action="" method="post">
+<input type="text" name="message" >
   <!-- <input type="text" name="message">
   <input type="text" name="username">
   <textarea name="content"></textarea>

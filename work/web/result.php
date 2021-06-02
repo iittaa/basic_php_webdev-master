@@ -3,6 +3,10 @@
 // 処理を止めたい
 require("../app/functions.php");
 
+
+
+
+
 // ??←Null合体演算子
 // $colorFromGet = $_GET["color"] ?? "transparent";
 // setcookie("color", $colorFromGet);
@@ -28,6 +32,8 @@ include("../app/_parts/_header.php");
 
 ?>
 
+
+<p>Message Added!</p>
 <p><a href="index.php">Go back!</a></p>
 
 <?php
